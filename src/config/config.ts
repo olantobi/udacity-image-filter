@@ -4,7 +4,6 @@ export const config = {
     "password": "udagramtobidev",
     "database": "udagramtobidev",
     "host": "udagramtobidev.ccws4izsgofh.us-east-1.rds.amazonaws.com",    
-    // "host": "udacity.cotihgkdnawh.us-east-1.rds.amazonaws.com",
     "dialect": "postgres",
     "aws_region": "us-east-1",
     "aws_profile": "udacity",

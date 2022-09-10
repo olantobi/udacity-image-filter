@@ -15,6 +15,9 @@ router.get('/', requireAuth, async (req: Request, res: Response) => {
 router.get('/:id', requireAuth, async (req: Request, res: Response) => {
     let { id } = req.params;
     const item = await User.findByPk(id);
+    if (!item) {
+        res.status(404).send({message: 'User not found'});
+    }
     res.send(item);
 });
 
