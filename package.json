@@ -4,10 +4,10 @@
   "main": "server.js",
   "license": "MIT",
   "scripts": {
-    "start": "node ./www/server",
+    "start": "node server",
     "tsc": "tsc",
     "dev": "ts-node-dev ./src/server.ts",
-    "prod": "tsc && node ./www/server.js",
+    "prod": "tsc && node server",
     "clean": "rimraf www/ || true",
     "build": "npm run clean && tsc && cp -rf src/config www/config && cp package.json www/package.json && cd www && zip -r Archive.zip . && cd ..",
     "test": "echo \"Error: no test specified\" && exit 1",

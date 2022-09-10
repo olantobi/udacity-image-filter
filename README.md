@@ -2,4 +2,4 @@
 
 URL on AWS is:
 
-- http://tobi-udagram-test.us-east-1.elasticbeanstalk.com/
+- http://tobi-udagram-test.us-east-1.elasticbeanstalk.com

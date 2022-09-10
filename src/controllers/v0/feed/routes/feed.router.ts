@@ -19,20 +19,33 @@ router.get('/', async (req: Request, res: Response) => {
 
 //@TODO
 //Add an endpoint to GET a specific resource by Primary Key
+router.get('/:id', async (req: Request, res: Response) => {
+    let { id } = req.params;
+    const item = await FeedItem.findByPk(id);
+    if (!id) {
+        res.status(404).send({message: 'Item not found'});
+    }
+    res.send(item);
+  });
 
 // update a specific resource
 router.patch('/:id', 
-    // requireAuth, 
+    requireAuth, 
     async (req: Request, res: Response) => {
         //@TODO try it yourself
-        res.status(500).send("not implemented")
+        res.status(500).send("not implemented");
 });
 
 // Get a signed url to put a new item in the bucket
 router.get('/signed-url/:fileName', requireAuth, async (req: Request, res: Response) => {
     let { fileName } = req.params;
-    const url = AWS.getPutSignedUrl(fileName);
-    res.status(201).send({url: url});
+
+    try {
+        const url = AWS.getPutSignedUrl(fileName);
+        res.status(201).send({url: url});
+    } catch (err) {
+        res.status(422).send({message: 'Unable to get signed url'});
+    }    
 });
 
 // Post meta data and the filename after a file is uploaded 
@@ -58,11 +71,6 @@ router.post('/', requireAuth, async (req: Request, res: Response) => {
     });
 
     const savedItem = await item.save();
-
-    // const createdItem: FeedItem = await FeedItem.create({
-    //     caption: caption,
-    //     url: fileName
-    // });
 
     savedItem.url = AWS.getGetSignedUrl(savedItem.url);
     res.status(201).send(savedItem);
