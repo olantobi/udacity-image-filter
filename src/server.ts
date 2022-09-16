@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express'
-import Jimp from 'jimp';
 
 import { IndexRouter } from './controllers/v0/index.router';
 import { V0MODELS } from './controllers/v0/model.index';
@@ -11,8 +10,8 @@ import {filterImageFromURL, deleteLocalFiles, validateUrl } from './util/util';
 const app = express();
 const PORT = process.env.PORT || 9000;
 
-// sequelize.addModels(V0MODELS);
-// sequelize.sync().then(() => console.log('connected to database'));
+sequelize.addModels(V0MODELS);
+sequelize.sync().then(() => console.log('connected to database'));
 
 app.use(express.json());
 
@@ -48,17 +47,7 @@ app.get('/filteredimage', async (req: Request, res: Response) => {
   res.send({data: filteredImage});
 
   deleteLocalFiles([filteredImage]);
-})
-
-app.get('/test', (req, res) => {
-  Jimp.read("https://upload.wikimedia.org/wikipedia/commons/b/bd/Golden_tabby_and_white_kitten_n01.jpg")
-  .then(image => {
-
-        console.log(image.bitmap);
-        res.end(image.bitmap);
-    });
 });
-
 
 app.use('/api/v0', IndexRouter);
 
